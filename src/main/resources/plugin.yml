@@ -1,0 +1,4 @@
+name: KLifeAbnormality
+version: '1.0-SNAPSHOT'
+main: oluni.official.kLifeAbnormality.KLifeAbnormality
+api-version: '1.21'

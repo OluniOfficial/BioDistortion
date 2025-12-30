@@ -12,7 +12,7 @@ private val flowers = setOf(
     Material.AZURE_BLUET, Material.RED_TULIP, Material.ORANGE_TULIP,
     Material.WHITE_TULIP, Material.PINK_TULIP, Material.OXEYE_DAISY,
     Material.CORNFLOWER, Material.LILY_OF_THE_VALLEY, Material.WITHER_ROSE,
-    Material.SHORT_GRASS, Material.FERN, Material.DEAD_BUSH,
+    Material.FERN, Material.DEAD_BUSH,
     Material.TORCHFLOWER, Material.PINK_PETALS, Material.MOSS_CARPET,
     Material.OAK_SAPLING, Material.SPRUCE_SAPLING, Material.BIRCH_SAPLING,
     Material.JUNGLE_SAPLING, Material.ACACIA_SAPLING, Material.DARK_OAK_SAPLING,
@@ -26,14 +26,14 @@ private val flowers = setOf(
 
 private val tallFlowers = setOf(
     Material.SUNFLOWER, Material.LILAC, Material.ROSE_BUSH, Material.PEONY,
-    Material.TALL_GRASS, Material.LARGE_FERN,
+    Material.LARGE_FERN,
     Material.PITCHER_PLANT, Material.SWEET_BERRY_BUSH, Material.CAVE_VINES,
     Material.AZALEA, Material.FLOWERING_AZALEA, Material.SMALL_DRIPLEAF,
     Material.BIG_DRIPLEAF, Material.BAMBOO, Material.PUMPKIN_STEM,
     Material.MELON_STEM
 )
 
-private val grasses = setOf(
+private val grassesBlocks = setOf(
     Material.GRASS_BLOCK,
     Material.PODZOL,
     Material.DIRT_PATH,
@@ -43,14 +43,24 @@ private val grasses = setOf(
     Material.FARMLAND,
     Material.MUD
 )
+private val replaceableBlocks = setOf(
+    Material.GRASS_BLOCK, Material.DIRT, Material.PODZOL, Material.DIRT_PATH,
+    Material.COARSE_DIRT, Material.ROOTED_DIRT, Material.FARMLAND, Material.MUD,
+    Material.MYCELIUM, Material.CLAY, Material.MOSS_BLOCK,
+    Material.STONE, Material.COBBLESTONE, Material.ANDESITE, Material.DIORITE,
+    Material.GRANITE, Material.TUFF, Material.DEEPSLATE, Material.COBBLED_DEEPSLATE,
+    Material.SAND, Material.RED_SAND, Material.GRAVEL
+)
 
+fun Block.isReplaceableBlock(): Boolean = type in replaceableBlocks
 fun Block.isAnomaly(): Boolean {
     val center = this.location.clone().add(0.5, 0.5, 0.5)
     return world.getNearbyEntities(center, 0.1, 0.1, 0.1)
         .filterIsInstance<ItemDisplay>()
         .any { it.persistentDataContainer.has(entityIdKey, PersistentDataType.STRING) }
 }
-
 fun Block.isFlower(): Boolean = type in flowers
 fun Block.isTallFlower(): Boolean = type in tallFlowers
-fun Block.isGrass(): Boolean = type in grasses
+fun Block.isGrassBlock(): Boolean = type in grassesBlocks
+fun Block.isGrass(): Boolean = type == Material.SHORT_GRASS
+fun Block.isTallGrass(): Boolean = type == Material.TALL_GRASS

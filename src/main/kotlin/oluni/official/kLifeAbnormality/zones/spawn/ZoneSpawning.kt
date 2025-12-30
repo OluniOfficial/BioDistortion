@@ -1,14 +1,14 @@
 package oluni.official.kLifeAbnormality.zones.spawn
 
-import oluni.official.kLifeAbnormality.extensions.isFlower
-import oluni.official.kLifeAbnormality.extensions.isGrass
-import oluni.official.kLifeAbnormality.extensions.isTallFlower
+import oluni.official.kLifeAbnormality.extensions.*
 import oluni.official.kLifeAbnormality.models.BlockEntity
 import oluni.official.kLifeAbnormality.models.list.CustomBlocks
 import oluni.official.kLifeAbnormality.zones.mechanic.Particles
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.World
+import org.bukkit.block.Block
+import org.bukkit.block.BlockFace
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import kotlin.math.min
@@ -21,67 +21,92 @@ class ZoneSpawning(val particles: Particles) {
 
     fun findLocationNearPlayer(player: Player, attempts: Int = 0) {
         if (attempts > 5) return
-        val location: Location = player.location
-        val world = location.world ?: return
+        val world = player.world
         if (world.environment != World.Environment.NORMAL) return
-        val x = location.blockX + (-50..50).random()
-        val z = location.blockZ + (-50..50).random()
-        val y = world.getHighestBlockYAt(x, z)
-        createZone(Location(world, x.toDouble(), y.toDouble(), z.toDouble()), player, attempts)
+        val randomX = player.location.blockX + (-50..50).random()
+        val randomZ = player.location.blockZ + (-50..50).random()
+        val startY = player.location.blockY + (-10..10).random()
+        val spawnLoc = findSurface(world, randomX, startY, randomZ)
+        if (spawnLoc != null) {
+            createZone(spawnLoc, player, attempts)
+        } else {
+            findLocationNearPlayer(player, attempts + 1)
+        }
     }
 
     fun createZone(location: Location, player: Player, attempts: Int) {
-        if (attempts >= 5) return
         val world = location.world ?: return
-        var badBlockCount = 0
+        val validLocations = mutableListOf<Location>()
         for ((xOffset, zOffset) in circleOffsets) {
-            val checkBlock = world.getBlockAt(location.blockX + xOffset, location.blockY, location.blockZ + zOffset)
-            val material = checkBlock.type
-            if (material == Material.AIR || material == Material.WATER || material == Material.LAVA) {
-                badBlockCount++
-                if (badBlockCount > 3) {
-                    findLocationNearPlayer(player, attempts + 1)
-                    return
-                }
-            }
-            for (checkY in 1..2) {
-                val anotherMaterial = checkBlock.getRelative(0, checkY, 0)
-                if (anotherMaterial.isSolid && !anotherMaterial.isFlower() && !anotherMaterial.isTallFlower()) {
-                    findLocationNearPlayer(player, attempts + 1)
-                    return
-                }
-            }
-        }
-        val validLocation = mutableListOf<Location>()
-        for ((xOffset, zOffset) in circleOffsets) {
-            val floorBlock = location.block.getRelative(xOffset, 0, zOffset)
-            if (floorBlock.isGrass()) {
-                val plantBlock = floorBlock.getRelative(0, 1, 0)
+            val targetX = location.blockX + xOffset
+            val targetZ = location.blockZ + zOffset
+            val floorBlock = findLocalSurface(world.getBlockAt(targetX, location.blockY, targetZ))
+            if (floorBlock != null && floorBlock.isReplaceableBlock() && !floorBlock.isAnomaly()) {
+                val plantBlock = floorBlock.getRelative(BlockFace.UP)
                 when {
                     plantBlock.isFlower() -> {
                         plantBlock.type = Material.WITHER_ROSE
                     }
                     plantBlock.isTallFlower() -> {
+                        val top = plantBlock.getRelative(BlockFace.UP)
                         plantBlock.type = Material.AIR
-                        plantBlock.getRelative(0, 1, 0).type = Material.AIR
+                        if (top.type == Material.TALL_GRASS || top.isTallFlower()) top.type = Material.AIR
                         BlockEntity(plantBlock.location, CustomBlocks.ANOMALY_KOREN)
+                    }
+                    plantBlock.isGrass() || plantBlock.type == Material.SHORT_GRASS -> {
+                        plantBlock.type = Material.AIR
+                        BlockEntity(plantBlock.location, CustomBlocks.ANOMALY_SHORT_GRASS)
+                    }
+                    plantBlock.isTallGrass() || plantBlock.type == Material.TALL_GRASS -> {
+                        val top = plantBlock.getRelative(BlockFace.UP)
+                        plantBlock.type = Material.AIR
+                        if (top.type == Material.TALL_GRASS) top.type = Material.AIR
+                        BlockEntity(plantBlock.location, CustomBlocks.ANOMALY_LONG_GRASS)
                     }
                     plantBlock.type == Material.SNOW -> plantBlock.type = Material.AIR
                 }
                 BlockEntity(floorBlock.location, CustomBlocks.ANOMALY_DIRT)
-                validLocation += floorBlock.location
+                validLocations += floorBlock.location
             }
         }
-        if (validLocation.isNotEmpty()) {
-            val raysCount = min((3..5).random(), validLocation.size)
-            validLocation.shuffled().take(raysCount).forEach { rayLoc ->
+        if (validLocations.isNotEmpty()) {
+            val raysCount = min((3..5).random(), validLocations.size)
+            validLocations.shuffled().take(raysCount).forEach { rayLoc ->
                 particles.greenParticlesRunnable(rayLoc.clone().add(0.5, 1.0, 0.5))
             }
-            world.getNearbyEntities(location, 3.0, 3.0, 3.0).forEach { entity ->
-                if (entity is LivingEntity) {
-                    entity.damage(16.0)
+            world.getNearbyEntities(location, 4.0, 4.0, 4.0).forEach { entity ->
+                if (entity is LivingEntity) entity.damage(16.0)
+            }
+        } else {
+            findLocationNearPlayer(player, attempts + 1)
+        }
+    }
+
+    private fun findSurface(world: World, x: Int, y: Int, z: Int): Location? {
+        for (dy in 0..20) {
+            for (direction in listOf(1, -1)) {
+                val currentY = y + (dy * direction)
+                if (currentY !in world.minHeight..world.maxHeight) continue
+                val block = world.getBlockAt(x, currentY, z)
+                if (block.isReplaceableBlock()) {
+                    val above = block.getRelative(BlockFace.UP)
+                    if (above.type == Material.AIR || above.isFlower() || above.isGrass()) {
+                        return block.location
+                    }
                 }
             }
         }
+        return null
+    }
+
+    private fun findLocalSurface(baseBlock: Block): Block? {
+        for (dy in listOf(0, 1, -1, 2, -2)) {
+            val check = baseBlock.getRelative(0, dy, 0)
+            if (check.isReplaceableBlock()) {
+                val above = check.getRelative(BlockFace.UP)
+                if (!above.type.isSolid || above.isFlower() || above.isGrass()) return check
+            }
+        }
+        return null
     }
 }

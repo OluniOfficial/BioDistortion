@@ -3,7 +3,9 @@ package oluni.official.kLifeAbnormality.zones.mechanic
 import oluni.official.kLifeAbnormality.extensions.isAnomaly
 import oluni.official.kLifeAbnormality.extensions.isFlower
 import oluni.official.kLifeAbnormality.extensions.isGrass
+import oluni.official.kLifeAbnormality.extensions.isGrassBlock
 import oluni.official.kLifeAbnormality.extensions.isTallFlower
+import oluni.official.kLifeAbnormality.extensions.isTallGrass
 import oluni.official.kLifeAbnormality.models.BlockEntity
 import oluni.official.kLifeAbnormality.models.list.CustomBlocks
 import org.bukkit.Bukkit
@@ -38,7 +40,7 @@ class AbnormalitySpread : BukkitRunnable() {
     private fun spread(source: Block) {
         for (face in offsets) {
             val target = source.getRelative(face)
-            if (target.isGrass() && !target.isAnomaly()) {
+            if (target.isGrassBlock() && !target.isAnomaly()) {
                 BlockEntity(target.location, CustomBlocks.ANOMALY_DIRT)
                 val plant = target.getRelative(BlockFace.UP)
                 when {
@@ -49,10 +51,22 @@ class AbnormalitySpread : BukkitRunnable() {
                     plant.isTallFlower() -> {
                         val top = plant.getRelative(BlockFace.UP)
                         plant.type = Material.AIR
-                        if (top.type == Material.TALL_GRASS || top.type == Material.LARGE_FERN || top.isTallFlower()) {
+                        if (top.isTallFlower()) {
                             top.type = Material.AIR
                         }
                         BlockEntity(plant.location, CustomBlocks.ANOMALY_KOREN)
+                    }
+                    plant.isGrass() -> {
+                        plant.type = Material.AIR
+                        BlockEntity(plant.location, CustomBlocks.ANOMALY_SHORT_GRASS)
+                    }
+                    plant.isTallGrass() -> {
+                        val top = plant.getRelative(BlockFace.UP)
+                        plant.type = Material.AIR
+                        if (top.isTallFlower()) {
+                            top.type = Material.AIR
+                        }
+                        BlockEntity(plant.location, CustomBlocks.ANOMALY_LONG_GRASS)
                     }
                 }
             }

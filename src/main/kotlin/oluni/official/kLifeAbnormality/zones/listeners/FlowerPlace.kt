@@ -1,8 +1,6 @@
 package oluni.official.kLifeAbnormality.zones.listeners
 
-import oluni.official.kLifeAbnormality.extensions.isAnomaly
-import oluni.official.kLifeAbnormality.extensions.isFlower
-import oluni.official.kLifeAbnormality.extensions.isTallFlower
+import oluni.official.kLifeAbnormality.extensions.*
 import oluni.official.kLifeAbnormality.models.BlockEntity
 import oluni.official.kLifeAbnormality.models.list.CustomBlocks
 import org.bukkit.Material
@@ -24,10 +22,22 @@ class FlowerPlace: Listener {
                 block.isTallFlower() -> {
                     val top = block.getRelative(BlockFace.UP)
                     block.type = Material.AIR
-                    if (top.type == Material.TALL_GRASS || top.isTallFlower()) {
+                    if (top.isTallFlower()) {
                         top.type = Material.AIR
                     }
                     BlockEntity(block.location, CustomBlocks.ANOMALY_KOREN)
+                }
+                block.isGrass() -> {
+                    block.type = Material.AIR
+                    BlockEntity(block.location, CustomBlocks.ANOMALY_SHORT_GRASS)
+                }
+                block.isTallGrass() -> {
+                    val top = block.getRelative(BlockFace.UP)
+                    block.type = Material.AIR
+                    if (top.isTallFlower()) {
+                        top.type = Material.AIR
+                    }
+                    BlockEntity(block.location, CustomBlocks.ANOMALY_LONG_GRASS)
                 }
             }
         }

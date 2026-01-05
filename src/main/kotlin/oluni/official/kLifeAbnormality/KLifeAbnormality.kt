@@ -18,6 +18,6 @@ class KLifeAbnormality : JavaPlugin() {
         zoneRunnable.runTaskTimer(this, 0L, 1200L)
         server.pluginManager.registerEvents(ModelsListener(), this)
         server.pluginManager.registerEvents(FlowerPlace(), this)
-        abnormalitySpread.runTaskTimer(this, 24000L, 24000L)
+        abnormalitySpread.runTaskTimer(this, 10000L, 10000L)
     }
 }

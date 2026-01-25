@@ -1,7 +1,7 @@
-package oluni.official.kLifeAbnormality.zones.listeners
+package oluni.official.bioDistortion.zones.listeners
 
-import oluni.official.kLifeAbnormality.models.BlockEntity
-import oluni.official.kLifeAbnormality.models.list.CustomBlocks
+import oluni.official.bioDistortion.models.BlockEntity
+import oluni.official.bioDistortion.models.list.CustomBlocks
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.Material

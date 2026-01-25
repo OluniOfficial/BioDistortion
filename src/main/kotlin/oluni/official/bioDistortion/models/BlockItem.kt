@@ -1,4 +1,4 @@
-package oluni.official.kLifeAbnormality.models
+package oluni.official.bioDistortion.models
 
 import org.bukkit.Material
 import org.bukkit.NamespacedKey

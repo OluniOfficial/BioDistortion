@@ -1,4 +1,4 @@
-name: KLifeAbnormality
-version: '1.0-SNAPSHOT'
-main: oluni.official.kLifeAbnormality.KLifeAbnormality
+name: BioDistortion
+version: '1.0-beta'
+main: oluni.official.bioDistortion.BioDistortion
 api-version: '1.21'

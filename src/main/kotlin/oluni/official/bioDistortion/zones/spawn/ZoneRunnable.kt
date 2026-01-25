@@ -1,4 +1,4 @@
-package oluni.official.kLifeAbnormality.zones.spawn
+package oluni.official.bioDistortion.zones.spawn
 
 import org.bukkit.Bukkit
 import org.bukkit.scheduler.BukkitRunnable

@@ -1,4 +1,4 @@
-package oluni.official.kLifeAbnormality.models
+package oluni.official.bioDistortion.models
 
 import org.bukkit.Location
 import org.bukkit.Material
@@ -7,7 +7,8 @@ import org.bukkit.entity.ItemDisplay
 import org.bukkit.persistence.PersistentDataType
 
 class BlockEntity(private var location: Location,
-                  private var blockItem: BlockItem) {
+                  private var blockItem: BlockItem
+) {
     private lateinit var entity: ItemDisplay
 
     init {

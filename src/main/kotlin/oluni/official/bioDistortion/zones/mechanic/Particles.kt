@@ -1,11 +1,11 @@
-package oluni.official.kLifeAbnormality.zones.mechanic
+package oluni.official.bioDistortion.zones.mechanic
 
-import oluni.official.kLifeAbnormality.KLifeAbnormality
+import oluni.official.bioDistortion.BioDistortion
 import org.bukkit.Location
 import org.bukkit.Particle
 import org.bukkit.scheduler.BukkitRunnable
 
-class Particles(val plugin: KLifeAbnormality) {
+class Particles(val plugin: BioDistortion) {
 
     fun greenParticlesRunnable(location: Location) {
         object : BukkitRunnable() {

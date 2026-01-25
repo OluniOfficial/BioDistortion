@@ -1,14 +1,14 @@
-package oluni.official.kLifeAbnormality
+package oluni.official.bioDistortion
 
-import oluni.official.kLifeAbnormality.zones.listeners.FlowerPlace
-import oluni.official.kLifeAbnormality.zones.listeners.ModelsListener
-import oluni.official.kLifeAbnormality.zones.mechanic.AbnormalitySpread
-import oluni.official.kLifeAbnormality.zones.mechanic.Particles
-import oluni.official.kLifeAbnormality.zones.spawn.ZoneRunnable
-import oluni.official.kLifeAbnormality.zones.spawn.ZoneSpawning
+import oluni.official.bioDistortion.zones.listeners.FlowerPlace
+import oluni.official.bioDistortion.zones.listeners.ModelsListener
+import oluni.official.bioDistortion.zones.mechanic.AbnormalitySpread
+import oluni.official.bioDistortion.zones.mechanic.Particles
+import oluni.official.bioDistortion.zones.spawn.ZoneRunnable
+import oluni.official.bioDistortion.zones.spawn.ZoneSpawning
 import org.bukkit.plugin.java.JavaPlugin
 
-class KLifeAbnormality : JavaPlugin() {
+class BioDistortion : JavaPlugin() {
 
     override fun onEnable() {
         val particle = Particles(this)

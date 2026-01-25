@@ -1,6 +1,6 @@
-package oluni.official.kLifeAbnormality.models.list
+package oluni.official.bioDistortion.models.list
 
-import oluni.official.kLifeAbnormality.models.BlockItem
+import oluni.official.bioDistortion.models.BlockItem
 import org.bukkit.Material
 
 object CustomBlocks {

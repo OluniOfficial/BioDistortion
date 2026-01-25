@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "oluni.official"
-version = "1.0"
+version = "1.0-beta"
 
 repositories {
     mavenCentral()

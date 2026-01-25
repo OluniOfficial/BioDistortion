@@ -1,9 +1,14 @@
-package oluni.official.kLifeAbnormality.zones.spawn
+package oluni.official.bioDistortion.zones.spawn
 
-import oluni.official.kLifeAbnormality.extensions.*
-import oluni.official.kLifeAbnormality.models.BlockEntity
-import oluni.official.kLifeAbnormality.models.list.CustomBlocks
-import oluni.official.kLifeAbnormality.zones.mechanic.Particles
+import oluni.official.bioDistortion.extensions.isAnomaly
+import oluni.official.bioDistortion.extensions.isFlower
+import oluni.official.bioDistortion.extensions.isGrass
+import oluni.official.bioDistortion.extensions.isReplaceableBlock
+import oluni.official.bioDistortion.extensions.isTallFlower
+import oluni.official.bioDistortion.extensions.isTallGrass
+import oluni.official.bioDistortion.models.BlockEntity
+import oluni.official.bioDistortion.models.list.CustomBlocks
+import oluni.official.bioDistortion.zones.mechanic.Particles
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.World

@@ -1,1 +1,1 @@
-rootProject.name = "KLifeAbnormality"
+rootProject.name = "BioDistortion"

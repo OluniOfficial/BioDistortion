@@ -2,11 +2,11 @@ package oluni.official.bioDistortion.zones.listeners
 
 import oluni.official.bioDistortion.extensions.entityIdKey
 import oluni.official.bioDistortion.models.BlockEntity
+import oluni.official.bioDistortion.models.BlockItem.Companion.BLOCK_ID
 import oluni.official.bioDistortion.models.list.CustomBlocks
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.Material
-import org.bukkit.NamespacedKey
 import org.bukkit.Sound
 import org.bukkit.block.Block
 import org.bukkit.enchantments.Enchantment
@@ -21,13 +21,12 @@ import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.persistence.PersistentDataType
 
 class ModelsListener: Listener {
-    private val blockIdKey = NamespacedKey("mysticism", "block_id")
 
     @EventHandler
     fun onBlockPlaced(event: BlockPlaceEvent) {
         val item = event.itemInHand
         val meta = item.itemMeta ?: return
-        val id = meta.persistentDataContainer.get(blockIdKey, PersistentDataType.STRING) ?: return
+        val id = meta.persistentDataContainer.get(BLOCK_ID, PersistentDataType.STRING) ?: return
         val customBlock = when (id) {
             CustomBlocks.ANOMALY_DIRT.id -> CustomBlocks.ANOMALY_DIRT
             CustomBlocks.ANOMALY_SHORT_GRASS.id -> CustomBlocks.ANOMALY_SHORT_GRASS

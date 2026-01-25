@@ -1,12 +1,13 @@
 package oluni.official.bioDistortion.extensions
 
+import oluni.official.bioDistortion.BioDistortion.Companion.MYSTICISM
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.block.Block
 import org.bukkit.entity.ItemDisplay
 import org.bukkit.persistence.PersistentDataType
 
-val entityIdKey = NamespacedKey("mysticism", "block_entity_id")
+internal val entityIdKey = NamespacedKey(MYSTICISM, "block_entity_id")
 private val flowers = setOf(
     Material.DANDELION, Material.POPPY, Material.BLUE_ORCHID, Material.ALLIUM,
     Material.AZURE_BLUET, Material.RED_TULIP, Material.ORANGE_TULIP,

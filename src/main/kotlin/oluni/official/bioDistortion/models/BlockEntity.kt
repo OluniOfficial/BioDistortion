@@ -1,8 +1,8 @@
 package oluni.official.bioDistortion.models
 
+import oluni.official.bioDistortion.extensions.entityIdKey
 import org.bukkit.Location
 import org.bukkit.Material
-import org.bukkit.NamespacedKey
 import org.bukkit.entity.ItemDisplay
 import org.bukkit.persistence.PersistentDataType
 
@@ -35,7 +35,7 @@ class BlockEntity(private var location: Location,
             display.isPersistent = true
             display.isInvulnerable = true
             display.persistentDataContainer.set(
-                NamespacedKey("mysticism", "block_entity_id"),
+                entityIdKey,
                 PersistentDataType.STRING,
                 blockItem.id
             )

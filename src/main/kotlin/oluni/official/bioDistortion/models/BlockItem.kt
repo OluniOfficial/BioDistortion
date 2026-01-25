@@ -2,6 +2,7 @@ package oluni.official.bioDistortion.models
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextDecoration
+import oluni.official.bioDistortion.BioDistortion.Companion.MYSTICISM
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.inventory.ItemStack
@@ -15,13 +16,17 @@ data class BlockItem(
     val hitboxMaterial: Material,
     val isTall: Boolean = false
 ) {
+    companion object {
+        val BLOCK_ID = NamespacedKey(MYSTICISM, "block_id")
+    }
+
     fun getItem(amount: Int): ItemStack {
         val item = ItemStack(Material.BARRIER, amount)
         item.editMeta { meta ->
             meta.displayName(displayName.decoration(TextDecoration.ITALIC, false))
             meta.lore(lore.map { it.decoration(TextDecoration.ITALIC, false) })
             meta.persistentDataContainer.set(
-                NamespacedKey("mysticism", "block_id"),
+                BLOCK_ID,
                 PersistentDataType.STRING,
                 id
             )

@@ -1,5 +1,6 @@
 package oluni.official.bioDistortion.zones.mechanic
 
+import oluni.official.bioDistortion.extensions.entityIdKey
 import oluni.official.bioDistortion.extensions.isAnomaly
 import oluni.official.bioDistortion.extensions.isFlower
 import oluni.official.bioDistortion.extensions.isGrass
@@ -10,7 +11,6 @@ import oluni.official.bioDistortion.models.BlockEntity
 import oluni.official.bioDistortion.models.list.CustomBlocks
 import org.bukkit.Bukkit
 import org.bukkit.Material
-import org.bukkit.NamespacedKey
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
 import org.bukkit.entity.ItemDisplay
@@ -18,7 +18,6 @@ import org.bukkit.persistence.PersistentDataType
 import org.bukkit.scheduler.BukkitRunnable
 
 class AbnormalitySpread : BukkitRunnable() {
-    private val entityIdKey = NamespacedKey("mysticism", "block_entity_id")
     private val offsets = listOf(
         BlockFace.NORTH, BlockFace.SOUTH,
         BlockFace.EAST, BlockFace.WEST

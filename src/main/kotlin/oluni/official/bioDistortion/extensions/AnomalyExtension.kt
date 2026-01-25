@@ -6,7 +6,7 @@ import org.bukkit.block.Block
 import org.bukkit.entity.ItemDisplay
 import org.bukkit.persistence.PersistentDataType
 
-private val entityIdKey = NamespacedKey("mysticism", "block_entity_id")
+val entityIdKey = NamespacedKey("mysticism", "block_entity_id")
 private val flowers = setOf(
     Material.DANDELION, Material.POPPY, Material.BLUE_ORCHID, Material.ALLIUM,
     Material.AZURE_BLUET, Material.RED_TULIP, Material.ORANGE_TULIP,

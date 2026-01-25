@@ -1,5 +1,6 @@
 package oluni.official.bioDistortion.zones.listeners
 
+import oluni.official.bioDistortion.extensions.entityIdKey
 import oluni.official.bioDistortion.models.BlockEntity
 import oluni.official.bioDistortion.models.list.CustomBlocks
 import org.bukkit.Bukkit
@@ -21,7 +22,6 @@ import org.bukkit.persistence.PersistentDataType
 
 class ModelsListener: Listener {
     private val blockIdKey = NamespacedKey("mysticism", "block_id")
-    private val entityIdKey = NamespacedKey("mysticism", "block_entity_id")
 
     @EventHandler
     fun onBlockPlaced(event: BlockPlaceEvent) {

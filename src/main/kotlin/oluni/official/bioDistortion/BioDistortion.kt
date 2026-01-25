@@ -8,7 +8,6 @@ import oluni.official.bioDistortion.zones.spawn.ZoneRunnable
 import oluni.official.bioDistortion.zones.spawn.ZoneSpawning
 import org.bukkit.plugin.java.JavaPlugin
 
-
 class BioDistortion : JavaPlugin() {
 
     companion object {

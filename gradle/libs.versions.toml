@@ -1,0 +1,19 @@
+[versions]
+kotlin = "2.3.0"
+run-paper = "2.3.1"
+paper-api = "1.21.8-R0.1-SNAPSHOT"
+mccoroutine = "2.22.0"
+shadow = "8.3.0"
+
+[libraries]
+paper-api = { module = "io.papermc.paper:paper-api", version.ref = "paper-api" }
+mccoroutine-bukkit-api = { module = "com.github.shynixn.mccoroutine:mccoroutine-bukkit-api", version.ref = "mccoroutine" }
+mccoroutine-bukkit-core = { module = "com.github.shynixn.mccoroutine:mccoroutine-bukkit-core", version.ref = "mccoroutine" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+run-paper = { id = "xyz.jpenilla.run-paper", version.ref = "run-paper" }
+shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
+
+[bundles]
+mccoroutine = ["mccoroutine-bukkit-api", "mccoroutine-bukkit-core"]

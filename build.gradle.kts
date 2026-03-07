@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.run.paper)
-    alias(libs.plugins.shadow)
 }
 
 repositories {
@@ -13,24 +12,23 @@ repositories {
 
 dependencies {
     compileOnly(libs.paper.api)
-    implementation(libs.bundles.mccoroutine)
+    compileOnly(libs.bundles.mccoroutine)
 }
 
 tasks {
     runServer {
         minecraftVersion("1.21.8")
     }
-    build {
-        dependsOn(shadowJar)
-    }
-    shadowJar {
-        relocate("kotlin", "oluni.official.libs.kotlin")
-        relocate("kotlinx", "oluni.official.libs.kotlinx")
-        relocate("com.github.shynixn.mccoroutine", "oluni.official.libs.mccoroutine")
+    processResources {
+        val props = mapOf("version" to project.version)
+        inputs.properties(props)
+        filteringCharset = "UTF-8"
+        filesMatching("paper-plugin.yml") {
+            expand(props)
+        }
     }
 }
 
 kotlin {
     jvmToolchain(21)
 }
-

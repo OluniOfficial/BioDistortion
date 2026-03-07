@@ -1,0 +1,6 @@
+name: BioDistortion
+version: "${version}"
+main: oluni.official.bioDistortion.BioDistortion
+description: "Anomalous zones"
+api-version: '1.21'
+loader: oluni.official.bioDistortion.BioDistortionLoader
